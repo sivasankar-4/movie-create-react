@@ -1,14 +1,17 @@
 import { useState } from "react";
-
+import MovieCard from "./components/MovieCard";
 function App() {
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [favorites,setFavorites] = useState([]);
 
   function handleChange(e) {
     setMovie(e.target.value);
   }
-
+  function addFavorite(movie) {
+    setFavorites((prev)=>[...prev,movie]);
+  }
   async function searchMovie() {
     if (!movie.trim()) return; // prevent empty search
 
@@ -42,6 +45,11 @@ function App() {
         placeholder="Enter Movie Name"
         value={movie}
         onChange={handleChange}
+        onKeyDown={(e)=>{
+          if(e.key === "Enter") {
+            searchMovie();
+          }
+        }}
       />
 
       <button onClick={searchMovie} style={{ marginLeft: "10px" }}>
@@ -53,14 +61,12 @@ function App() {
       {!loading && movies.length === 0 && movie && (
         <p>No movies found</p>
       )}
-
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {movies.map((m) => (
-          <li key={m.imdbID}>{m.Title} ({m.Year})</li>
-        ))}
-      </ul>
-    </div>
-  );
+    <div style={{display: "flex", flexWrap: "wrap",justifyContent:"center"}}>
+  {movies.map((m) => (
+    <MovieCard key={m.imdbID} movie={m} addFavorite={addFavorite}/>
+  ))}
+</div>
+</div>
+);
 }
-
 export default App;
