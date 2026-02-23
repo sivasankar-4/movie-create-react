@@ -1,31 +1,21 @@
-function MovieCard({movie,addFavorite }){
-    return (
-        <div style={{
+function MovieCard({ movie, onSelect }) {
+  return (
+    <div class="movie-card"
+    onClick = {() =>onSelect(movie.imdbID)}
+    >
+      <img
+        src={movie.Poster !== "N/A"
+          ? movie.Poster
+          : "https://via.placeholder.com/200"}
+        alt={movie.Title}
+        width="180"
+        style={{ borderRadius: "8px" }}
+      />
 
-            border:"1px solid gray",
-            padding:"10px",
-            margin:"10px",
-            width:"200px",
-            borderRadius: "8px"
-
-        }}>
-         <img
-      src={
-       movie.Poster !== "N/A"
-         ? movie.Poster
-          : "https://via.placeholder.com/150"
-  }
-  alt={movie.Title}
-  width="150"
-/>
-
-          <h3>{movie.Title}</h3>
-          <p>{movie.year}</p>
-          <p>Type:{movie.Type}</p>
-
-          <button onClick={() => addFavorite(movie)}>❤️ Favorite</button>
-        </div>
-    );
+      <h3>{movie.Title}</h3>
+      <p>{movie.Year}</p>
+    </div>
+  );
 }
 
 export default MovieCard;
