@@ -24,7 +24,6 @@ function App() {
       );
       const data = await response.json();
    
-     
       if (data.Response === "True") {
         setMovies(data.Search);
       } else {
